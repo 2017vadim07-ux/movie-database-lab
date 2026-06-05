@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Фільмова база</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Фільмова база</h1>
+    <p>Лабораторний проект з Fetch API, async/await, DOM та ES6+</p>
+  </header>
+
+  <main>
+    <section class="controls">
+      <input type="text" id="searchInput" placeholder="Пошук за назвою або жанром">
+
+      <select id="sortSelect">
+        <option value="default">Без сортування</option>
+        <option value="title">Сортувати за алфавітом</option>
+        <option value="rating">Сортувати за рейтингом</option>
+      </select>
+
+      <button id="reloadButton">Оновити</button>
+    </section>
+
+    <p id="status">Завантаження даних...</p>
+
+    <section id="moviesContainer" class="movies"></section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
