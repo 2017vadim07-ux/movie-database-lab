@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Практична робота №5</title>
+  <title>Практична робота №6</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -13,29 +13,10 @@
     }
 
     .box {
-      max-width: 700px;
+      max-width: 750px;
       background: white;
       padding: 20px;
       border-radius: 8px;
-    }
-
-    button {
-      padding: 10px 15px;
-      background: #1f3b57;
-      color: white;
-      border: none;
-      cursor: pointer;
-      margin-bottom: 15px;
-    }
-
-    button:hover {
-      background: #315c84;
-    }
-
-    img {
-      width: 140px;
-      display: block;
-      margin: 10px 0;
     }
 
     pre {
@@ -43,22 +24,18 @@
       color: #e5e7eb;
       padding: 15px;
       border-radius: 8px;
-      overflow-x: auto;
       white-space: pre-wrap;
     }
   </style>
 </head>
 <body>
   <div class="box">
-    <h1>Практична робота №5</h1>
-    <h2>Асинхронне програмування та робота з API</h2>
+    <h1>Практична робота №6</h1>
+    <h2>Модульна система та сучасні можливості ES6+</h2>
 
-    <button id="loadPokemon">Load Pokémon Data</button>
-
-    <div id="pokemonCard"></div>
-    <pre id="pokemonOutput">Натисніть кнопку, щоб завантажити дані.</pre>
+    <div id="app"></div>
   </div>
 
-  <script src="script.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>
