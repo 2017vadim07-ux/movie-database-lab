@@ -1,105 +1,125 @@
 "use strict";
 
-const API_URL = "https://api.tvmaze.com/shows";
+console.log("Підключено JavaScript для Практичної роботи №5");
 
-const moviesContainer = document.getElementById("moviesContainer");
-const searchInput = document.getElementById("searchInput");
-const sortSelect = document.getElementById("sortSelect");
-const reloadButton = document.getElementById("reloadButton");
-const statusText = document.getElementById("status");
+const loadPokemonButton = document.getElementById("loadPokemon");
+const pokemonOutput = document.getElementById("pokemonOutput");
+const pokemonCard = document.getElementById("pokemonCard");
 
-let movies = [];
-
-const removeHtmlTags = (text) => {
-  return text ? text.replace(/<[^>]*>/g, "") : "Опис відсутній";
-};
-
-const getRating = (movie) => {
-  return movie.rating.average || 0;
-};
-
-async function loadMovies() {
-  try {
-    statusText.textContent = "Завантаження даних...";
-    moviesContainer.innerHTML = "";
-
-    const response = await fetch(API_URL);
-
-    if (!response.ok) {
-      throw new Error(`Помилка завантаження: ${response.status}`);
-    }
-
-    movies = await response.json();
-
-    statusText.textContent = `Завантажено фільмів: ${movies.length}`;
-    renderMovies(movies);
-  } catch (error) {
-    statusText.textContent = "Не вдалося завантажити дані з API.";
-    moviesContainer.innerHTML = `<p class="error">${error.message}</p>`;
-    console.error("Помилка:", error);
-  }
+// Callback
+function showMessage(callback) {
+  setTimeout(function() {
+    callback("Callback виконано");
+  }, 1000);
 }
 
-function renderMovies(movieList) {
-  if (movieList.length === 0) {
-    moviesContainer.innerHTML = "<p>Фільми не знайдено.</p>";
+showMessage(function(message) {
+  console.log(message);
+});
+
+// Promise
+function promiseExample() {
+  return new Promise(function(resolve) {
+    setTimeout(function() {
+      resolve("Promise виконано");
+    }, 1000);
+  });
+}
+
+promiseExample()
+  .then(function(result) {
+    console.log(result);
+  })
+  .catch(function(error) {
+    console.error(error);
+  });
+
+// Async/Await + Fetch API
+async function loadPokemonData() {
+  const pokemonName = prompt("Введіть ім'я або ID покемона:");
+
+  if (!pokemonName || pokemonName.trim() === "") {
+    alert("Потрібно ввести ім'я або ID покемона.");
     return;
   }
 
-  moviesContainer.innerHTML = movieList.map((movie) => {
+  const name = pokemonName.trim().toLowerCase();
+  const url = `https://pokeapi.co/api/v2/pokemon/${name}`;
+
+  try {
+    pokemonOutput.textContent = "Завантаження...";
+    pokemonCard.innerHTML = "";
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error("Покемона не знайдено або сталася помилка запиту.");
+    }
+
+    const data = await response.json();
+
     const {
+      id,
       name,
-      genres,
-      language,
-      premiered,
-      image,
-      rating,
-      summary
-    } = movie;
+      height,
+      weight,
+      sprites,
+      types,
+      abilities
+    } = data;
 
-    const poster = image ? image.medium : "https://via.placeholder.com/210x295?text=No+Image";
-    const movieGenres = genres.length > 0 ? genres.join(", ") : "Жанр не вказано";
-    const movieRating = rating.average ? rating.average : "Немає рейтингу";
-    const description = removeHtmlTags(summary).slice(0, 150);
+    const pokemonTypes = types.map(item => item.type.name).join(", ");
+    const pokemonAbilities = abilities.map(item => item.ability.name).join(", ");
+    const image = sprites.front_default;
 
-    return `
-      <article class="movie-card">
-        <img src="${poster}" alt="${name}">
-        <h3>${name}</h3>
-        <p><b>Жанри:</b> ${movieGenres}</p>
-        <p><b>Мова:</b> ${language}</p>
-        <p><b>Дата виходу:</b> ${premiered || "Невідомо"}</p>
-        <p><b>Рейтинг:</b> ${movieRating}</p>
-        <p>${description}...</p>
-      </article>
+    pokemonCard.innerHTML = `
+      <h3>${name.toUpperCase()}</h3>
+      <img src="${image}" alt="${name}">
+      <p><b>ID:</b> ${id}</p>
+      <p><b>Зріст:</b> ${height}</p>
+      <p><b>Вага:</b> ${weight}</p>
+      <p><b>Тип:</b> ${pokemonTypes}</p>
+      <p><b>Здібності:</b> ${pokemonAbilities}</p>
     `;
-  }).join("");
+
+    pokemonOutput.textContent = JSON.stringify(data, null, 2);
+    console.log("Дані покемона:", data);
+  } catch (error) {
+    pokemonOutput.textContent = error.message;
+    pokemonCard.innerHTML = "";
+    console.error("Error:", error);
+  }
 }
 
-function updateMovies() {
-  const searchValue = searchInput.value.trim().toLowerCase();
-  const sortValue = sortSelect.value;
+// Promise.all
+async function loadSeveralPokemon() {
+  try {
+    const urls = [
+      "https://pokeapi.co/api/v2/pokemon/pikachu",
+      "https://pokeapi.co/api/v2/pokemon/bulbasaur"
+    ];
 
-  let filteredMovies = movies.filter((movie) => {
-    const title = movie.name.toLowerCase();
-    const genres = movie.genres.join(" ").toLowerCase();
+    const requests = urls.map(url => fetch(url).then(response => response.json()));
+    const results = await Promise.all(requests);
 
-    return title.includes(searchValue) || genres.includes(searchValue);
+    console.log("Promise.all результат:", results);
+  } catch (error) {
+    console.error("Promise.all error:", error);
+  }
+}
+
+// Promise.race
+async function raceExample() {
+  const fastRequest = fetch("https://pokeapi.co/api/v2/pokemon/ditto");
+  const slowPromise = new Promise(function(resolve) {
+    setTimeout(resolve, 3000, "Час очікування завершено");
   });
 
-  if (sortValue === "title") {
-    filteredMovies.sort((a, b) => a.name.localeCompare(b.name));
-  }
-
-  if (sortValue === "rating") {
-    filteredMovies.sort((a, b) => getRating(b) - getRating(a));
-  }
-
-  renderMovies(filteredMovies);
+  const result = await Promise.race([fastRequest, slowPromise]);
+  console.log("Promise.race результат:", result);
 }
 
-searchInput.addEventListener("input", updateMovies);
-sortSelect.addEventListener("change", updateMovies);
-reloadButton.addEventListener("click", loadMovies);
+loadPokemonButton.addEventListener("click", loadPokemonData);
 
-loadMovies();
+loadSeveralPokemon();
+raceExample();

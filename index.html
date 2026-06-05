@@ -3,32 +3,61 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Фільмова база</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Практична робота №5</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      background: #f2f4f8;
+      color: #222;
+    }
+
+    .box {
+      max-width: 700px;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    button {
+      padding: 10px 15px;
+      background: #1f3b57;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-bottom: 15px;
+    }
+
+    button:hover {
+      background: #315c84;
+    }
+
+    img {
+      width: 140px;
+      display: block;
+      margin: 10px 0;
+    }
+
+    pre {
+      background: #111827;
+      color: #e5e7eb;
+      padding: 15px;
+      border-radius: 8px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>Фільмова база</h1>
-    <p>Лабораторний проект з Fetch API, async/await, DOM та ES6+</p>
-  </header>
+  <div class="box">
+    <h1>Практична робота №5</h1>
+    <h2>Асинхронне програмування та робота з API</h2>
 
-  <main>
-    <section class="controls">
-      <input type="text" id="searchInput" placeholder="Пошук за назвою або жанром">
+    <button id="loadPokemon">Load Pokémon Data</button>
 
-      <select id="sortSelect">
-        <option value="default">Без сортування</option>
-        <option value="title">Сортувати за алфавітом</option>
-        <option value="rating">Сортувати за рейтингом</option>
-      </select>
-
-      <button id="reloadButton">Оновити</button>
-    </section>
-
-    <p id="status">Завантаження даних...</p>
-
-    <section id="moviesContainer" class="movies"></section>
-  </main>
+    <div id="pokemonCard"></div>
+    <pre id="pokemonOutput">Натисніть кнопку, щоб завантажити дані.</pre>
+  </div>
 
   <script src="script.js"></script>
 </body>
