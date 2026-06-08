@@ -1,0 +1,184 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background: #101314;
+  color: white;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+.app {
+  min-height: 100vh;
+  padding: 24px;
+  background: var(--bg);
+  color: white;
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 42px;
+  color: var(--accent);
+}
+
+.header p {
+  margin: 6px 0 0;
+  color: #aab7b0;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.stats div,
+.panel,
+.click-zone {
+  border: 1px solid #2b3b3f;
+  border-radius: 10px;
+  background: var(--panel);
+}
+
+.stats div {
+  padding: 16px;
+}
+
+.stats span {
+  display: block;
+  margin-bottom: 8px;
+  color: #aab7b0;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.stats strong {
+  font-size: 28px;
+}
+
+.click-zone {
+  display: grid;
+  place-items: center;
+  gap: 12px;
+  padding: 28px;
+  margin-bottom: 20px;
+}
+
+.click-button {
+  width: 220px;
+  height: 220px;
+  border: none;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #101314;
+  font-size: 36px;
+  font-weight: 800;
+  box-shadow: 0 0 30px rgba(94, 231, 135, 0.35);
+}
+
+.click-button:active {
+  transform: scale(0.96);
+}
+
+.panel {
+  padding: 18px;
+  margin-bottom: 20px;
+}
+
+.panel h2 {
+  margin-top: 0;
+  color: var(--accent);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.card {
+  padding: 14px;
+  border: 1px solid #33464b;
+  border-radius: 10px;
+  background: #111819;
+}
+
+.card h3 {
+  margin-top: 0;
+}
+
+.card p {
+  color: #b5c4bd;
+}
+
+.card button,
+.actions button,
+.panel > button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #101314;
+  font-weight: 700;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.good {
+  color: #5ee787;
+  font-weight: 700;
+}
+
+.bad {
+  color: #ff6b6b;
+  font-weight: 700;
+}
+
+ul {
+  margin-bottom: 0;
+}
+
+@media (max-width: 900px) {
+  .stats,
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .header h1 {
+    font-size: 34px;
+  }
+}
+
+@media (max-width: 560px) {
+  .app {
+    padding: 14px;
+  }
+
+  .stats,
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .click-button {
+    width: 180px;
+    height: 180px;
+    font-size: 28px;
+  }
+}
